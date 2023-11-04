@@ -1,5 +1,6 @@
 import MainLayout from '../layouts/MainLayout';
 import { View, Text,Button } from 'react-native';
+import React from 'react';
 
 export default function HomeScreen({ navigation }) {
 
