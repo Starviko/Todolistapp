@@ -3,6 +3,8 @@ import ToDoForm from '../components/ToDoForm';
 import MainLayout from '../layouts/MainLayout';
 import { View, Button } from 'react-native';
 import React from 'react';
+import { useState } from 'react';
+
 
 export default function HomeScreen({ navigation }) {
     const [tasks, setTasks] = useState([
@@ -14,20 +16,17 @@ export default function HomeScreen({ navigation }) {
         if(!tasks.includes(taskText)){
           setTasks([...tasks, taskText]);
         }   
-      }
-    
+      }   
     return (
         <MainLayout>
             <View>
                 <ToDo tasks={tasks} />
-                <ToDoForm addTask={addTask} />   
+                <ToDoForm addTask={addTask} />                  
                 <Button
-                    title="Home"
-                    onPress={() => navigation.navigate('Home')}
+                    title="About"
+                    onPress={() => navigation.navigate('About')}
                 />
             </View>
-        </MainLayout>
-      
-        
+        </MainLayout>        
     );
 }

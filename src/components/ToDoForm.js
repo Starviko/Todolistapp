@@ -1,29 +1,46 @@
 import React from 'react';
-import {SafeAreaView, StyleSheet, Pressable, View, Text, ScrollView, TextInput, Button} from 'react-native';
+import {StyleSheet, View, TextInput, Button} from 'react-native';
+import { useEffect } from 'react';
 
 export default function ToDoForm({addTask})
 {
-  const [taskText, setTaskText] = React.useState('');
+  // const [taskText, setTaskText] = React.useState('');
+  const [tasks, setTasks] = React.useState([]);
+  const [selectedTask, setSelectedTask] = React.useState(null);
 
-  const handleChange = (e) => {
-    e.preventDefault();
-    addTask(taskText);
-    setTaskText('');
+  const fetchTasks = async () => {
+    try{
+      const response = await fetch("../data/tasks.json");
+      const data = await response.json();
+      setTasks(data);
+    }
+    catch(error){
+      console.error(error);
+    }}
 
-  }
+  useEffect(() => {fetchTasks();}, []);
+  const handleAddTask = () => {
+    if(tasks.length > 0){
+      const tasksIndex = Math.floor(Math.random() * tasks.length);
+      const randomTask = tasks[tasksIndex];
+      //const randomTask = tasks[randomIndex].taskName;
+      setSelectedTask(randomTask);}}
 
+
+  // const handleChange = (e) => {
+  //   e.preventDefault();
+  //   addTask(taskText);
+  //   setTaskText('');}
   
-
-
   return (
     <View style={styles.form}>
         <TextInput
           style={styles.input}
           placeholder="Add a new task..."
-          onChangeText={(text) => setTaskText(text)}
-          value = {taskText}
+          // onChangeText={(text) => setTaskText(text)}
+          value = {selectedTask}
         />
-        <Button title="Add Text" onPress={handleChange} />
+        <Button title="Add Text" onPress={handleAddTask} />
       </View>
     );
 }
